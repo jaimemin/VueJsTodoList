@@ -1,25 +1,38 @@
 <template>
-  <div id="app">
-    <div class="container">
-      <div class="col-md-6 offset-md-3">
-        <h1 class="text-center mb-4">Todo 어플리케이션</h1>
-        <input type="text" class="form-control mb-4" v-model="userInput" @keyup.enter="addNewTodo">
+  <div class="container">
+    <div class="col-md-6 offset-md-3">
+      <h1 class="text-center mt-5 mb-4">To-Do App</h1>
+      <input type="text" class="form-control form-control-lg mb-4" v-model="newTodo" @keyup.enter="addNewTodo">
 
-        <div class="list-group mb-4">
-          <template v-for="todo in activeTodoList">
-            <todo 
-              :label="todo.label"
-              @componentClick="toggleTodoState(todo)"
-              v-bind:key="todo.label"
-            />
-          </template>
-        </div>
+      <div class="list-group mb-4">
+        <Todo
+          v-for="todo in currentTodoList"
+          :title="todo.title"
+          :status="todo.status"
+          @toggleStatus="toggleTodoStatus(todo)"
+          v-bind:key="todo.title"
+        />
+      </div>
 
-        <div class="text-right">
-          <button type="button" class="btn btn-sm" @click="changeCurrentState('active')">할 일</button>
-          <button type="button" class="btn btn-sm" @click="changeCurrentState('done')">완료</button>
-          <button type="button" class="btn btn-sm" @click="changeCurrentState('all')">전체</button>
-        </div>
+      <div class="text-right">
+        <button type="button" 
+          class="btn btn-sm col-md-6" 
+          :class="{'btn-primary': listType === 'active', 'btn-secondary': listType !== 'active'}" 
+          @click="changeListType('active')">
+          할일
+        </button>
+        <button type="button" 
+          class="btn btn-sm col-md-6" 
+          :class="{'btn-primary': listType === 'done', 'btn-secondary': listType !== 'done'}" 
+          @click="changeListType('done')">
+          완료
+        </button>
+        <button type="button" 
+          class="btn btn-sm col-md-6" 
+          :class="{'btn-primary': listType === 'all', 'btn-secondary': listType !== 'all'}" 
+          @click="changeListType('all')">
+          전체
+        </button>
       </div>
     </div>
   </div>
@@ -27,34 +40,36 @@
 
 <script>
 import Todo from './components/Todo';
-
 export default {
-  name: 'App',
   data() {
     return {
-      userInput: '',
+      newTodo: '',
       todoList: [],
-      currentState: 'active'
+      listType: 'active'
     };
   },
   computed: {
-    activeTodoList() {
-      return this.todoList.filter(todo => this.currentState === 'all' || todo.state === this.currentState);
+    currentTodoList() {
+      return this.todoList.filter(todo => this.listType === 'all' || todo.status === this.listType);
     }
   },
   methods: {
-    changeCurrentState(state) {
-      this.currentState = state;
-    },
     addNewTodo() {
+      if (this.newTodo.trim() === '') {
+        alert('할 일을 적어주세요.');
+        return;
+      }
       this.todoList.push({
-        label: this.userInput,
-        state: 'active'
+        title: this.newTodo,
+        status: 'active'
       });
-      this.userInput = '';
+      this.newTodo = '';
     },
-    toggleTodoState(todo) {
-      todo.state = todo.state === 'active' ? 'done' : 'active';
+    toggleTodoStatus(todo) {
+      todo.status = todo.status === 'done' ? 'active' : 'done';
+    },
+    changeListType(type) {
+      this.listType = type;
     }
   },
   components: {
@@ -62,14 +77,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

@@ -1,14 +1,23 @@
 <template>
-    <button class="list-group-item text-left" @click="clickButton">
-        {{ label }}
+    <button 
+        type="button"
+        class="list-group-item list-group-item-action"
+        :class="buttonStyle"
+        @click="$emit('toggleStatus')"
+    >
+        {{ title }}
     </button>
 </template>
 <script>
     export default {
-        props: ['label'],
-        methods: {
-            clickButton() {
-                this.$emit('componentClick');
+        props: ['title', 'status'],
+        computed: {
+            buttonStyle() {
+                if (this.status === 'done') {
+                    return ['list-group-itme-success'];
+                }
+
+                return [];
             }
         }
     };
