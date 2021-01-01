@@ -20,7 +20,7 @@
     <body>
         <div id="app">
             <!-- <img :id="`thumbnail_${id}`" :src="image"> -->
-
+            <button type="button" @click="btnClick">버튼</button>
             <div :class="[dropdown, toggle]">
                 <ul>
                     <li><a href="#">메뉴1</a></li>
@@ -49,6 +49,11 @@
                             on: false
                         }
                     };
+                },
+                methods: {
+                    btnClick() {
+                        this.toggle.on = !this.toggle.on;
+                    }
                 }
             })
         </script>
