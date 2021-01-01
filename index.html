@@ -3,18 +3,30 @@
     <head>
 
     </head>
+    <style>
+        .dropdown ul {
+            display: none;
+            list-style: none;
+            margin: 0;
+            border: 1px solid black;
+            padding: 10px;
+            width: 200px;
+        }
+
+        .dropdown.on ul {
+            display: block;
+        }
+    </style>
     <body>
         <div id="app">
-            <ul style="list-style: none">
-                <template v-for="item in items">
-                    <li>
-                        <img :src="item.image">
-                    </li>
-                    <li>
-                        {{ item.title }}
-                    </li>
-                </template>
-            </ul>
+            <!-- <img :id="`thumbnail_${id}`" :src="image"> -->
+
+            <div :class="[dropdown, toggle]">
+                <ul>
+                    <li><a href="#">메뉴1</a></li>
+                    <li><a href="#">메뉴2</a></li>
+                </ul>
+            </div>
         </div>
         <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -23,28 +35,19 @@
                 el: '#app',
                 data() {
                     return {
-                        items: [
-                            {
-                                id: 1,
-                                image: 'https://picsum.photos/210/118/?image=1',
-                                title: '컴퓨터'
-                            },
-                            {
-                                id: 2,
-                                image: 'https://picsum.photos/210/118/?image=100',
-                                title: '해변'
-                            },
-                            {
-                                id: 3,
-                                image: 'https://picsum.photos/210/118/?image=160',
-                                title: '휴대폰'
-                            },
-                            {
-                                id: 4,
-                                image: 'https://picsum.photos/210/118/?image=200',
-                                title: '황소'
-                            }
-                        ]
+                        id: 1,
+                        image: 'https://picsum.photos/200/200/?image=353',
+                        style: {
+                            background: 'red'
+                        },
+                        fontStyle: {
+                            fontSize: '10px',
+                            fontFamily: 'dotum'
+                        },
+                        dropdown: 'dropdown',
+                        toggle: {
+                            on: false
+                        }
                     };
                 }
             })
