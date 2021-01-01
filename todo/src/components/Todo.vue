@@ -14,7 +14,7 @@
         computed: {
             buttonStyle() {
                 if (this.status === 'done') {
-                    return ['list-group-itme-success'];
+                    return ['list-group-item-success'];
                 }
 
                 return [];
