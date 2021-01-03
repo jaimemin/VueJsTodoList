@@ -4,7 +4,6 @@
             <template v-for="chat in chatList">
                 <ChatListItem
                     :chat="chat"
-                    @click="itemClick"
                     v-bind:key="chat.id"
                 />
             </template>
