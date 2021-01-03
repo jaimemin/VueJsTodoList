@@ -6,7 +6,6 @@
     <div class="container mx-auto mt-5">
       <ChatList
         :chat-list="chatList"
-        @read-item="readChatItem"
       />
     </div>
   </div>
@@ -15,6 +14,8 @@
 <script>
 import Header from './components/Header';
 import ChatList from './components/ChatList';
+
+import { bus } from './event-bus';
 
 export default {
   name: 'app',
@@ -53,6 +54,11 @@ export default {
     readChatItem(chatItem) {
       this.chatList.filter(item => item.id === chatItem.id)[0].new = 0;
     }
+  },
+  created() {
+    bus.$on('CHAT_CLICK', chat => {
+      this.readChatItem(chat);
+    });
   },
   components: {
     Header,

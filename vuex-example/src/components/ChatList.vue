@@ -17,9 +17,6 @@ import ChatListItem from './ChatListItem';
 export default {
     props: ['chatList'],
     methods: {
-        itemClick(chatItem) {
-            this.$emit('read-item', chatItem);
-        }
     },
     components: {
         ChatListItem
